@@ -285,14 +285,25 @@ class _ProgressCircle extends NodeWithSize {
 
   double value;
 
+  final Paint circlePaint = new Paint()
+    ..color = Colors.white30
+    ..strokeWidth = 24.0
+    ..style = ui.PaintingStyle.stroke;
+
+  final Paint pathPaint = new Paint()
+    ..color = Colors.purple[100]
+    ..strokeWidth = 25.0
+    ..style = ui.PaintingStyle.stroke;
+
+  final Paint pathGlowPaint = new Paint()
+    ..color = Colors.purple[200]
+    ..strokeWidth = 25.0
+    ..style = ui.PaintingStyle.stroke
+    ..maskFilter = new MaskFilter.blur(BlurStyle.normal, 15.0);
+
   @override
   void paint(Canvas canvas) {
     applyTransformForPivot(canvas);
-
-    Paint circlePaint = new Paint()
-      ..color = Colors.white30
-      ..strokeWidth = 24.0
-      ..style = ui.PaintingStyle.stroke;
 
     canvas.drawCircle(
       new Point(size.width / 2.0, size.height / 2.0),
@@ -300,15 +311,10 @@ class _ProgressCircle extends NodeWithSize {
       circlePaint
     );
 
-    Paint pathPaint = new Paint()
-      ..color = Colors.purple[500]
-      ..strokeWidth = 25.0
-      ..style = ui.PaintingStyle.stroke
-      ..maskFilter = new MaskFilter.blur(BlurStyle.normal, 10.0);
-
     double angle = value.clamp(0.0, 1.0) * _kSweep;
     Path path = new Path()
       ..arcTo(Point.origin & size, -math.PI / 2.0, angle, false);
+    canvas.drawPath(path, pathGlowPaint);
     canvas.drawPath(path, pathPaint);
   }
 }
