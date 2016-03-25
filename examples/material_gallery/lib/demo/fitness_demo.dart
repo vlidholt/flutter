@@ -40,6 +40,7 @@ class _FitnessDemoContentsState extends State<_FitnessDemoContents> {
     _images = new ImageMap(bundle);
     await _images.load(<String>[
       'packages/flutter_gallery_assets/jumpingjack.png',
+      'packages/flutter_gallery_assets/grain.png',
     ]);
 
     String json = await DefaultAssetBundle.of(context).loadString('packages/flutter_gallery_assets/jumpingjack.json');
@@ -211,6 +212,11 @@ class _WorkoutAnimationNode extends NodeWithSize {
   }) : super(const Size(1024.0, 1024.0)) {
     reset();
 
+    final Sprite grain = new Sprite.fromImage(_images['packages/flutter_gallery_assets/grain.png'])
+      ..position = const Point(512.0, 512.0)
+      ..scale = 2.0;
+    addChild(grain);
+
     _progress = new _ProgressCircle(const Size(800.0, 800.0));
     _progress.pivot = const Point(0.5, 0.5);
     _progress.position = const Point(512.0, 512.0);
@@ -297,7 +303,8 @@ class _ProgressCircle extends NodeWithSize {
     Paint pathPaint = new Paint()
       ..color = Colors.purple[500]
       ..strokeWidth = 25.0
-      ..style = ui.PaintingStyle.stroke;
+      ..style = ui.PaintingStyle.stroke
+      ..maskFilter = new MaskFilter.blur(BlurStyle.normal, 10.0);
 
     double angle = value.clamp(0.0, 1.0) * _kSweep;
     Path path = new Path()
