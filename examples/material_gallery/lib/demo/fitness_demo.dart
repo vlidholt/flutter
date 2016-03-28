@@ -291,7 +291,7 @@ class _ProgressCircle extends NodeWithSize {
     ..style = ui.PaintingStyle.stroke;
 
   final Paint pathPaint = new Paint()
-    ..color = Colors.purple[100]
+    ..color = Colors.white
     ..strokeWidth = 25.0
     ..style = ui.PaintingStyle.stroke;
 
